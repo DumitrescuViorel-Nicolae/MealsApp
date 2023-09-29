@@ -1,11 +1,58 @@
-import { StatusBar, Button } from "react-native";
-import CategoriesScreen from "./screens/CategoriesScreen";
+import "react-native-gesture-handler";
+import { StatusBar, AppRegistry } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+
+import CategoriesScreen from "./screens/CategoriesScreen";
 import MealsOverviewScreen from "./screens/MealsOverviewScreen";
 import MealDetailsScreen from "./screens/MealDetailsScreen";
+import FavoritesScreen from "./screens/FavoritesScreen";
+
+import { Ionicons } from "@expo/vector-icons";
+
+AppRegistry.registerComponent("app", () => App);
 
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
+function DrawerNavigator() {
+  return (
+    <Drawer.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: "#351401" },
+        headerTintColor: "white",
+        sceneContainerStyle: { backgroundColor: "#3f2f25" },
+        drawerContentStyle: {
+          backgroundColor: "#351401",
+        },
+        drawerInactiveTintColor: "white",
+        drawerActiveTintColor: "#351401",
+        drawerActiveBackgroundColor: "#e4baa1",
+      }}
+    >
+      <Drawer.Screen
+        name={"Categories"}
+        component={CategoriesScreen}
+        options={{
+          title: "All Categories",
+          drawerIcon: ({ color, size }) => {
+            return <Ionicons color={color} size={size} name="list" />;
+          },
+        }}
+      />
+      <Drawer.Screen
+        options={{
+          drawerIcon: ({ color, size }) => {
+            return <Ionicons color={color} size={size} name="star" />;
+          },
+        }}
+        name="Favorites"
+        component={FavoritesScreen}
+      />
+    </Drawer.Navigator>
+  );
+}
 
 export default function App() {
   return (
@@ -13,7 +60,6 @@ export default function App() {
       <StatusBar style="light" />
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="MealsCategories"
           screenOptions={{
             headerStyle: { backgroundColor: "#351401" },
             headerTintColor: "white",
@@ -21,11 +67,11 @@ export default function App() {
           }}
         >
           <Stack.Screen
-            name="MealsCategories"
+            name="Drawer"
             options={{
-              title: "All Categories",
+              headerShown: false,
             }}
-            component={CategoriesScreen}
+            component={DrawerNavigator}
           />
           <Stack.Screen name="MealsOverview" component={MealsOverviewScreen} />
           <Stack.Screen name="MealDetail" component={MealDetailsScreen} />
