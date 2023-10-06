@@ -11,6 +11,7 @@ const MealItem = ({ id, title, url, detailsObj }) => {
       mealId: id,
     });
   };
+
   return (
     <View style={styles.mealItem}>
       <Pressable

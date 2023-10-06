@@ -8,8 +8,9 @@ import CategoriesScreen from "./screens/CategoriesScreen";
 import MealsOverviewScreen from "./screens/MealsOverviewScreen";
 import MealDetailsScreen from "./screens/MealDetailsScreen";
 import FavoritesScreen from "./screens/FavoritesScreen";
-import FavoritesContextProvider from "./Store/context/favorites-context";
 import { Ionicons } from "@expo/vector-icons";
+import { Provider } from "react-redux";
+import { store } from "./Store/redux/redux";
 
 AppRegistry.registerComponent("app", () => App);
 
@@ -58,7 +59,8 @@ export default function App() {
   return (
     <>
       <StatusBar style="light" />
-      <FavoritesContextProvider>
+      {/* <FavoritesContextProvider> */}
+      <Provider store={store}>
         <NavigationContainer>
           <Stack.Navigator
             screenOptions={{
@@ -81,7 +83,9 @@ export default function App() {
             <Stack.Screen name="MealDetail" component={MealDetailsScreen} />
           </Stack.Navigator>
         </NavigationContainer>
-      </FavoritesContextProvider>
+      </Provider>
+
+      {/* </FavoritesContextProvider> */}
     </>
   );
 }
